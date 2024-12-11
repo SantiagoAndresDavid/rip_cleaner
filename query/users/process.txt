@@ -1,0 +1,1 @@
+1. validar que la edad sea correspondiente con el tipo de documento

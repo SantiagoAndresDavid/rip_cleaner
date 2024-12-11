@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15 # Imagen de PostgreSQL
+    container_name: hospital_db
+    ports:
+      - "5432:5432" # Mapea el puerto 5432 del host al contenedor
+    environment:
+      POSTGRES_PASSWORD: rootpassword # Contraseña para el usuario postgres (superusuario)
+      POSTGRES_DB: my_database # Nombre de la base de datos inicial
+      POSTGRES_USER: postgres # Usuario root predeterminado de PostgreSQL
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persiste los datos en un volumen
+    networks:
+      - db_network
+
+networks:
+  db_network:
+    driver: bridge
+
+volumes:
+  db_data:
