@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION actualizar_finalidad(
+CREATE OR REPLACE FUNCTION actualizar_finalidades(
     codigo_consulta TEXT,
     edades_usuario TEXT[],           -- Lista de edades
     unidad_edad TEXT,                -- Única unidad de edad
