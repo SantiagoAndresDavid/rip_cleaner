@@ -1,4 +1,4 @@
-CREATE TABLE resolucion_manual (
+CREATE TABLE resolucion_automatica (
                              Tipo_de_registro VARCHAR(255),
                              Consecutivo_de_registro VARCHAR(255),
                              Codigo_de_habilitacion_IPS_primaria VARCHAR(255),

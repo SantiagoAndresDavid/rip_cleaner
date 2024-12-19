@@ -1,0 +1,11 @@
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+BEGIN;
+
+UPDATE ap
+SET NUMERO_DE_LA_FACTURA = 'FEHM' || '234457'
+RETURNING NUMERO_DE_LA_FACTURA, NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA;
+
+COMMIT;
+
+
