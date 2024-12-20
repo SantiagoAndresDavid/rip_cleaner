@@ -16,4 +16,3 @@ CREATE TABLE AM (
 );
 
 
-DELETE FROM am;

@@ -15,4 +15,3 @@ CREATE TABLE AP (
                                 FORMA_DE_REALIZACION_DEL_ACTO_QUIRURGICO TEXT,
                                 VALOR_DEL_PROCEDIMIENTO TEXT
 );
-DELETE FROM ap;
