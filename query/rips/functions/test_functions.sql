@@ -1,3 +1,4 @@
+
 SELECT * FROM actualizar_tipo_identificacion();
 SELECT * FROM actualizar_codigo_factura(234457);
 SELECT * FROM actualizar_codigo_municipio();
