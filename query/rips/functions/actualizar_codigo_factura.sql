@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION actualizar_codigo_factura(codigo_factura INTEGER)
+CREATE OR REPLACE FUNCTION actualizar_codigo_factura(codigo_factura TEXT)
     RETURNS TABLE(NUMERO_DE_LA_FACTURA TEXT, NUMERO_DE_IDENTIFICACION TEXT) AS $$
 BEGIN
     -- Actualizar los valores en la tabla 'ap' y devolver los resultados

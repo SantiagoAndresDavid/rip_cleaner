@@ -14,6 +14,14 @@ SET valor_de_la_cuota_moderadora =
             END
 WHERE valor_de_la_cuota_moderadora LIKE '%.00';
 
+UPDATE ac
+SET valor_neto_a_pagar =
+        CASE
+            WHEN valor_neto_a_pagar = '0.00' THEN '0'
+            ELSE REPLACE(valor_neto_a_pagar, '.00', '')
+            END
+WHERE valor_neto_a_pagar LIKE '%.00';
+
 
 
 

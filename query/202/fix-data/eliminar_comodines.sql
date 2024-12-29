@@ -24,18 +24,18 @@ CREATE TABLE datos_variables (
     resultado_escala_abreviada_motricidad_audicion VARCHAR(2) CHECK (resultado_escala_abreviada_motricidad_audicion IN ('0', '3', '4', '5', '21')),
     tratamiento_ablativo VARCHAR(2) CHECK (tratamiento_ablativo IN ('0', '6', '7', '8', '9', '10', '21')),
     resultado_tamizaje_oximetria VARCHAR(2) CHECK (resultado_tamizaje_oximetria IN ('0', '4', '5', '21')),
-    fecha_consulta_valoracion_integral VARCHAR(10) CHECK (fecha_consulta_valoracion_integral ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_consulta_valoracion_integral VARCHAR(10) CHECK (fecha_consulta_valoracion_integral ~ '^(1800-01-01)$'),
     resultado_glicemia_basal VARCHAR(3) CHECK (resultado_glicemia_basal ~ '^\d{1,3}$' AND resultado_glicemia_basal::INTEGER BETWEEN 0 AND 998),
-    fecha_tamizaje_vale VARCHAR(10) CHECK (fecha_tamizaje_vale ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_tacto_rectal VARCHAR(10) CHECK (fecha_tacto_rectal ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_tamizaje_oximetria VARCHAR(10) CHECK (fecha_tamizaje_oximetria ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_realizacion_colonoscopia VARCHAR(10) CHECK (fecha_realizacion_colonoscopia ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_prueba_sangre_oculta VARCHAR(10) CHECK (fecha_prueba_sangre_oculta ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_tamizaje_auditivo_neonatal VARCHAR(10) CHECK (fecha_tamizaje_auditivo_neonatal ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_tamizaje_vale VARCHAR(10) CHECK (fecha_tamizaje_vale ~ '^(1800-01-01)$'),
+    fecha_tacto_rectal VARCHAR(10) CHECK (fecha_tacto_rectal ~ '^(1800-01-01)$'),
+    fecha_tamizaje_oximetria VARCHAR(10) CHECK (fecha_tamizaje_oximetria ~ '^(1800-01-01)$'),
+    fecha_realizacion_colonoscopia VARCHAR(10) CHECK (fecha_realizacion_colonoscopia ~ '^(1800-01-01)$'),
+    fecha_prueba_sangre_oculta VARCHAR(10) CHECK (fecha_prueba_sangre_oculta ~ '^(1800-01-01)$'),
+    fecha_tamizaje_auditivo_neonatal VARCHAR(10) CHECK (fecha_tamizaje_auditivo_neonatal ~ '^(1800-01-01)$'),
     suministro_fortificacion_casera VARCHAR(2) CHECK (suministro_fortificacion_casera IN ('0', '1', '16', '17', '18', '20', '21')),
-    fecha_toma_psa VARCHAR(10) CHECK (fecha_toma_psa ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_tamizaje_visual_neonatal VARCHAR(10) CHECK (fecha_tamizaje_visual_neonatal ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_atencion_bucal VARCHAR(10) CHECK (fecha_atencion_bucal ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_toma_psa VARCHAR(10) CHECK (fecha_toma_psa ~ '^(1800-01-01)$'),
+    fecha_tamizaje_visual_neonatal VARCHAR(10) CHECK (fecha_tamizaje_visual_neonatal ~ '^(1800-01-01)$'),
+    fecha_atencion_bucal VARCHAR(10) CHECK (fecha_atencion_bucal ~ '^(1800-01-01)$'),
     resultado_ldl VARCHAR(12) CHECK (resultado_ldl ~ '^\d{1,3}$' AND resultado_ldl::INTEGER BETWEEN 0 AND 998),
     resultado_hdl VARCHAR(12) CHECK (resultado_hdl ~ '^\d{1,3}$' AND resultado_hdl::INTEGER BETWEEN 0 AND 998),
     resultado_trigliceridos VARCHAR(12) CHECK (resultado_trigliceridos ~ '^(\d{1,3}|998|0)$'),
@@ -67,7 +67,7 @@ CREATE TABLE datos_variables (
     segundo_apellido_del_usuario VARCHAR(255),
     primer_nombre_del_usuario VARCHAR(255),
     segundo_nombre_del_usuario VARCHAR(255),
-    fecha_de_nacimiento VARCHAR(255) CHECK (fecha_de_nacimiento ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_nacimiento VARCHAR(255) CHECK (fecha_de_nacimiento ~ '^(1800-01-01)$'),
     sexo VARCHAR(255),
     codigo_pertenencia_etnica VARCHAR(255),
     codigo_de_ocupacion VARCHAR(255),
@@ -75,11 +75,11 @@ CREATE TABLE datos_variables (
     gestante VARCHAR(255),
     resultado_de_la_prueba_mini_mental_state VARCHAR(255),
     sintomatico_respiratorio VARCHAR(255),
-    fecha_del_peso VARCHAR(255) CHECK (fecha_del_peso ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_del_peso VARCHAR(255) CHECK (fecha_del_peso ~ '^(1800-01-01)$'),
     peso_en_kilogramos VARCHAR(255),
-    fecha_de_la_talla VARCHAR(255) CHECK (fecha_de_la_talla ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_la_talla VARCHAR(255) CHECK (fecha_de_la_talla ~ '^(1800-01-01)$'),
     talla_en_centimetros VARCHAR(255),
-    fecha_probable_de_parto VARCHAR(255) CHECK (fecha_probable_de_parto ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_probable_de_parto VARCHAR(255) CHECK (fecha_probable_de_parto ~ '^(1800-01-01)$'),
     fecha_de_atencion_parto_o_cesarea VARCHAR(255) CHECK (fecha_de_atencion_parto_o_cesarea ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
     fecha_de_salida_de_atencion_parto_o_cesarea VARCHAR(255) CHECK (fecha_de_salida_de_atencion_parto_o_cesarea ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
     fecha_de_atencion_en_salud_para_la_promocion_y_apoyo_de_la_lactancia_materna VARCHAR(255) CHECK (fecha_de_atencion_en_salud_para_la_promocion_y_apoyo_de_la_lactancia_materna ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
@@ -107,98 +107,21 @@ CREATE TABLE datos_variables (
     resultado_tamizaje_cancer_de_cuello_uterino VARCHAR(255),
     calidad_en_la_muestra_de_citologia_cervicouterina VARCHAR(255),
     codigo_de_habilitacion_ips_donde_se_realiza_tamizaje_cancer_de_cuello_uterino VARCHAR(255),
-    fecha_de_colposcopia VARCHAR(255) CHECK (fecha_de_colposcopia ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_de_biopsia_cervicouterina VARCHAR(255) CHECK (fecha_de_biopsia_cervicouterina ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_colposcopia VARCHAR(255) CHECK (fecha_de_colposcopia ~ '^(1800-01-01)$'),
+    fecha_de_biopsia_cervicouterina VARCHAR(255) CHECK (fecha_de_biopsia_cervicouterina ~ '^(1800-01-01)$'),
     resultado_de_biopsia_cervicouterina VARCHAR(255),
-    fecha_de_toma_de_mamografia VARCHAR(255) CHECK (fecha_de_toma_de_mamografia ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_toma_de_mamografia VARCHAR(255) CHECK (fecha_de_toma_de_mamografia ~ '^(1800-01-01)$'),
     resultado_de_mamografia VARCHAR(255),
-    fecha_de_resultado_biopsia_de_mama VARCHAR(255) CHECK (fecha_de_resultado_biopsia_de_mama ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_resultado_biopsia_de_mama VARCHAR(255) CHECK (fecha_de_resultado_biopsia_de_mama ~ '^(1800-01-01)$'),
     resultado_de_biopsia_de_mama VARCHAR(255),
-    fecha_de_toma_hemoglobina VARCHAR(255) CHECK (fecha_de_toma_hemoglobina ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_toma_hemoglobina VARCHAR(255) CHECK (fecha_de_toma_hemoglobina ~ '^(1800-01-01)$'),
     resultado_de_hemoglobina VARCHAR(255),
-    fecha_de_toma_glicemia_basal VARCHAR(255) CHECK (fecha_de_toma_glicemia_basal ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
-    fecha_de_toma_creatinina VARCHAR(255) CHECK (fecha_de_toma_creatinina ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_toma_glicemia_basal VARCHAR(255) CHECK (fecha_de_toma_glicemia_basal ~ '^(1800-01-01)$'),
+    fecha_de_toma_creatinina VARCHAR(255) CHECK (fecha_de_toma_creatinina ~ '^(1800-01-01)$'),
     resultado_de_creatinina VARCHAR(255),
     preservativos_entregados_a_pacientes_con_its_2 VARCHAR(255),
-    fecha_de_toma_de_baciloscopia_diagnostico VARCHAR(255) CHECK (fecha_de_toma_de_baciloscopia_diagnostico ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$'),
+    fecha_de_toma_de_baciloscopia_diagnostico VARCHAR(255) CHECK (fecha_de_toma_de_baciloscopia_diagnostico ~ '^(1800-01-01)$'),
     resultado_de_baciloscopia_diagnostico VARCHAR(255)
 );
 
 
-UPDATE datos_variables
-SET
-    resultado_prueba_mini_mental_state = 
-        CASE 
-            WHEN resultado_prueba_mini_mental_state IN ('0', '4', '5', '21') THEN NULL
-            ELSE resultado_prueba_mini_mental_state
-        END,
-    consumo_tabaco = 
-        CASE 
-            WHEN consumo_tabaco ~ '^\d|[1-8]\d|9[0-5]|96|97|98|99$' THEN NULL
-            ELSE consumo_tabaco
-        END,
-    resultado_tacto_rectal = 
-        CASE 
-            WHEN resultado_tacto_rectal IN ('0', '4', '5', '21') THEN NULL
-            ELSE resultado_tacto_rectal
-        END,
-    acido_folico_preconcepcional = 
-        CASE 
-            WHEN acido_folico_preconcepcional IN ('0', '1', '2', '21') THEN NULL
-            ELSE acido_folico_preconcepcional
-        END,
-    resultado_prueba_sangre_oculta_materia_fecal = 
-        CASE 
-            WHEN resultado_prueba_sangre_oculta_materia_fecal IN ('0', '4', '5', '6', '21') THEN NULL
-            ELSE resultado_prueba_sangre_oculta_materia_fecal
-        END,
-    agudeza_visual_lejana_ojo_izquierdo = 
-        CASE 
-            WHEN agudeza_visual_lejana_ojo_izquierdo IN ('0', '3', '4', '5', '6', '7', '8', '9', '21') THEN NULL
-            ELSE agudeza_visual_lejana_ojo_izquierdo
-        END,
-    agudeza_visual_lejana_ojo_derecho = 
-        CASE 
-            WHEN agudeza_visual_lejana_ojo_derecho IN ('0', '3', '4', '5', '6', '7', '8', '9', '21') THEN NULL
-            ELSE agudeza_visual_lejana_ojo_derecho
-        END,
-    codigo_pais = 
-        CASE 
-            WHEN codigo_pais ~ '^[0-9]{3}$' THEN NULL
-            ELSE codigo_pais
-        END,
-    clasificacion_riesgo_gestacional = 
-        CASE 
-            WHEN clasificacion_riesgo_gestacional IN ('0', '4', '5', '21') THEN NULL
-            ELSE clasificacion_riesgo_gestacional
-        END,
-    resultado_colonoscopia_tamizaje = 
-        CASE 
-            WHEN resultado_colonoscopia_tamizaje IN ('0', '2', '3', '4', '5', '6', '21') THEN NULL
-            ELSE resultado_colonoscopia_tamizaje
-        END,
-    resultado_tamizaje_auditivo_neonatal = 
-        CASE 
-            WHEN resultado_tamizaje_auditivo_neonatal IN ('0', '4', '5', '21') THEN NULL
-            ELSE resultado_tamizaje_auditivo_neonatal
-        END,
-    fecha_consulta_valoracion_integral = 
-        CASE 
-            WHEN fecha_consulta_valoracion_integral ~ '^(1800-01-01|1805-01-01|1810-01-01|1825-01-01|1830-01-01|1835-01-01|1845-01-01|[1-9][0-9]{3}-[01][0-9]-[0-3][0-9])$' THEN NULL
-            ELSE fecha_consulta_valoracion_integral
-        END,
-    resultado_glicemia_basal = 
-        CASE 
-            WHEN resultado_glicemia_basal !~ '^\d{1,3}$' OR resultado_glicemia_basal::INTEGER BETWEEN 0 AND 998 THEN NULL
-            ELSE resultado_glicemia_basal
-        END,
-    sifilis_gestacional_congenita = 
-        CASE 
-            WHEN sifilis_gestacional_congenita = '0' THEN NULL
-            ELSE sifilis_gestacional_congenita
-        END,
-    hipotiroidismo_congenito = 
-        CASE 
-            WHEN hipotiroidismo_congenito = '0' THEN NULL
-            ELSE hipotiroidismo_congenito
-        END;
