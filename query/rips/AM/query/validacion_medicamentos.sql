@@ -39,16 +39,21 @@ WHERE
 -- Actualizar codigo_del_medicamento cuando sea NULL basado en el nombre del medicamento
 UPDATE AM
 SET codigo_del_medicamento = (
-    SELECT m.codigo_del_medicamento
-    FROM medicamentos m
-    WHERE m.nombre_generico_del_medicamento = AM.nombre_generico_del_medicamento
+  SELECT m.codigo_del_medicamento
+  FROM medicamentos m
+  WHERE m.nombre_generico_del_medicamento = AM.nombre_generico_del_medicamento
 )
 WHERE codigo_del_medicamento IS NULL
   AND nombre_generico_del_medicamento IS NOT NULL
   AND EXISTS (
-    SELECT 1
-    FROM medicamentos m
-    WHERE m.nombre_generico_del_medicamento = AM.nombre_generico_del_medicamento
+  SELECT 1
+  FROM medicamentos m
+  WHERE 
+    m.tipo_de_medicamento = AM.tipo_de_medicamento
+    AND m.nombre_generico_del_medicamento = AM.nombre_generico_del_medicamento
+    AND m.forma_farmaceutica = AM.forma_farmaceutica
+    AND m.concentracion_del_medicamento = AM.concentracion_del_medicamento
+    AND m.unidad_de_medida_del_medicamento = AM.unidad_de_medida_del_medicamento
 );
 
 
@@ -82,17 +87,6 @@ WHERE codigo_del_medicamento IS NULL
       AND (AM.concentracion_del_medicamento IS NULL OR AM.concentracion_del_medicamento = m.concentracion_del_medicamento)
       AND (AM.unidad_de_medida_del_medicamento IS NULL OR AM.unidad_de_medida_del_medicamento = m.unidad_de_medida_del_medicamento)
 );
-
-
-
-DELETE FROM medicamentos
-WHERE ctid NOT IN (
-    SELECT MIN(ctid)
-    FROM medicamentos
-    GROUP BY codigo_del_medicamento
-);
-
-
 
 SELECT codigo_del_medicamento, COUNT(*)
 FROM medicamentos

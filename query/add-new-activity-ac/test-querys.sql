@@ -21,3 +21,7 @@ SELECT * FROM create_new_registry(
             ],
         ARRAY['DI00011-3', 'DI00011-4', 'DI00011-5', 'DI00011-6']
               );
+
+SELECT * FROM create_new_registry_only_age(
+        ARRAY['DI0001-1','DI0001-2', 'DI0001-3', 'DI0001-6'],'0','5','1'
+              );

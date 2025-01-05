@@ -1,9 +1,18 @@
---SELECT * FROM actualizar_tipo_identificacion();
---SELECT * FROM actualizar_codigo_factura(234457);
---SELECT * FROM actualizar_codigo_municipio();
---SELECT * FROM actualizar_causa_externa();
---SELECT * FROM actualizar_diagnostico_vacio();
-SELECT * FROM buscar_usuarios_por_codigo_consulta('890205');
+SELECT * FROM eliminar_duplicados_ac();
+SELECT * FROM actualizar_tipo_identificacion();
+SELECT * FROM actualizar_codigo_municipio();
+SELECT * FROM actualizar_causa_externa();
+SELECT * FROM actualizar_finalidad_diagnostico_niños();
+SELECT * FROM actualizar_codigo_factura('240390');
+SELECT * FROM actualizar_diagnostico_vacio();
+SELECT * FROM actualizar_codigos_procedimientos_erroneos();
+SELECT * FROM actualizar_forma_realizacion_acto_quirurgico();
+SELECT * FROM actualizar_finalidad_erronea('1','3');
+
+
+
+
+SELECT * FROM buscar_usuarios_por_codigo_consulta('890703');
 
 SELECT *
 FROM buscar_usuarios_por_filtros(
@@ -15,7 +24,7 @@ FROM buscar_usuarios_por_filtros(
 );
 
 
-SELECT * FROM actualizar_finalidad(
+SELECT * FROM actualizar_finalidades(
                '890201',                    -- Código de la consulta
                ARRAY['21', '22', '23','24','26','27'],     -- Lista de edades
                '1',                         -- Única unidad de edad
@@ -24,7 +33,7 @@ SELECT * FROM actualizar_finalidad(
 );
 
 
-SELECT * FROM actualizar_diagnostico(
+SELECT * FROM actualizar_diagnosticos(
     '890201',
     ARRAY['21', '22', '23','24','26','27'],
     '1',

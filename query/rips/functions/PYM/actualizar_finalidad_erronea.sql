@@ -1,0 +1,8 @@
+CREATE OR REPLACE FUNCTION actualizar_finalidad_erronea(erronea TEXT, nueva TEXT)
+RETURNS VOID AS $$
+BEGIN
+    UPDATE AP
+    SET FINALIDAD_DEL_PROCEDIMIENTO = nueva
+    WHERE FINALIDAD_DEL_PROCEDIMIENTO = erronea;
+END;
+$$ LANGUAGE plpgsql;
