@@ -59,5 +59,21 @@ BEGIN
                   AND ap.tipo_de_identificacion_del_usuario != us.tipo_de_identificacion_del_usuario
             )
             RETURNING 'ap' AS tabla_origen, numero_de_identificacion_del_usuario_en_el_sistema;
+
+    RETURN QUERY
+        UPDATE at
+            SET tipo_de_identificacion_del_usuario = (
+                SELECT tipo_de_identificacion_del_usuario
+                FROM us
+                WHERE us.numero_de_identificacion_del_usuario_del_sistema = at.numero_de_identificacion_del_usuario_en_el_sistema
+            )
+            WHERE EXISTS (
+                SELECT 1
+                FROM us
+                WHERE us.numero_de_identificacion_del_usuario_del_sistema = at.numero_de_identificacion_del_usuario_en_el_sistema
+                  AND at.tipo_de_identificacion_del_usuario != us.tipo_de_identificacion_del_usuario
+            )
+            RETURNING 'at' AS tabla_origen, numero_de_identificacion_del_usuario_en_el_sistema;
+
 END;
 $$ LANGUAGE plpgsql;

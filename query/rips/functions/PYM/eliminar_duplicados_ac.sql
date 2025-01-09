@@ -21,17 +21,19 @@ BEGIN
                         ac.CODIGO_DE_LA_CONSULTA,
                         ac.FINALIDAD_DE_LA_CAUSA_EXTERNA_CONSULTA
                     ORDER BY
-                        ac.NUMERO_DE_LA_FACTURA -- Ajustar el criterio de orden si es necesario
+                        ac.NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA -- Ajustar el criterio de orden si es necesario
                     ) AS fila,
-                ac.NUMERO_DE_LA_FACTURA
+                ac.NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA
             FROM AC ac
             )
+            -- Aquí vamos a eliminar solo los registros duplicados
             DELETE FROM AC
-                WHERE NUMERO_DE_LA_FACTURA IN (
-                    SELECT cte.NUMERO_DE_LA_FACTURA
+                WHERE NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA IN (
+                    SELECT cte.NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA
                     FROM CTE cte
                     WHERE cte.fila > 1
                 )
+                -- Después de eliminar, devolvemos los registros eliminados
                 RETURNING
                     NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA AS usuario_id,
                     FECHA_DE_LA_CONSULTA AS consulta_fecha,

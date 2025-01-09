@@ -54,15 +54,6 @@ FROM resolucion_manual
 WHERE fecha_de_la_talla ~ '^\d{1,2}/\d{1,2}/\d{4}$';
 
 
-UPDATE resolucion_manual
-SET fecha_de_la_talla = CASE
-                              WHEN fecha_de_la_talla ~ '^\d{1,2}/\d{1,2}/\d{4}$' AND CAST(SPLIT_PART(fecha_de_la_talla, '/', 2) AS INTEGER) <= 12
-                                  THEN TO_CHAR(TO_DATE(fecha_de_la_talla, 'DD/MM/YYYY'), 'YYYY-MM-DD')
-                              WHEN fecha_de_la_talla ~ '^\d{1,2}/\d{1,2}/\d{4}$' AND CAST(SPLIT_PART(fecha_de_la_talla, '/', 1) AS INTEGER) <= 12
-                                  THEN TO_CHAR(TO_DATE(fecha_de_la_talla, 'MM/DD/YYYY'), 'YYYY-MM-DD')
-                              ELSE fecha_de_la_talla  -- Deja los valores que no coinciden con ninguno de los patrones
-    END
-WHERE fecha_de_la_talla ~ '^\d{1,2}/\d{1,2}/\d{4}$';
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 SELECT fecha_probable_de_parto,
        CASE
@@ -284,3 +275,132 @@ SET fecha_de_toma_trigliceridos = CASE
                                    ELSE fecha_de_toma_trigliceridos  -- Deja los valores que no coinciden con ninguno de los patrones
     END
 WHERE fecha_de_toma_trigliceridos ~ '^\d{1,2}/\d{1,2}/\d{4}$';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SELECT fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion,
+       CASE
+           WHEN fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion ~ '^\d{1,2}/\d{1,2}/\d{4}$' AND CAST(SPLIT_PART(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, '/', 2) AS INTEGER) <= 12
+               THEN TO_CHAR(TO_DATE(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, 'DD/MM/YYYY'), 'YYYY-MM-DD')
+           WHEN fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion ~ '^\d{1,2}/\d{1,2}/\d{4}$' AND CAST(SPLIT_PART(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, '/', 1) AS INTEGER) <= 12
+               THEN TO_CHAR(TO_DATE(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, 'MM/DD/YYYY'), 'YYYY-MM-DD')
+           ELSE fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion
+           END AS fecha_convertida
+FROM resolucion_manual
+WHERE fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion ~ '^\d{1,2}/\d{1,2}/\d{4}$';
+
+
+UPDATE resolucion_manual
+SET fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion = CASE
+                                      WHEN fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion ~ '^\d{1,2}/\d{1,2}/\d{4}$' AND CAST(SPLIT_PART(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, '/', 2) AS INTEGER) <= 12
+                                          THEN TO_CHAR(TO_DATE(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, 'DD/MM/YYYY'), 'YYYY-MM-DD')
+                                      WHEN fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion ~ '^\d{1,2}/\d{1,2}/\d{4}$' AND CAST(SPLIT_PART(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, '/', 1) AS INTEGER) <= 12
+                                          THEN TO_CHAR(TO_DATE(fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion, 'MM/DD/YYYY'), 'YYYY-MM-DD')
+                                      ELSE fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion  -- Deja los valores que no coinciden con ninguno de los patrones
+    END
+WHERE fecha_de_atencion_en_salud_para_la_asesoria_en_anticoncepcion ~ '^\d{1,2}/\d{1,2}/\d{4}$';
+
+
+
+CREATE OR REPLACE FUNCTION actualizar_fechas_resolucion_manual()
+    RETURNS VOID AS $$
+DECLARE
+    col_name TEXT;
+    query TEXT := '';
+BEGIN
+    -- Iterar sobre las columnas que comienzan con 'fecha' en la tabla resolucion_manual
+    FOR col_name IN
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'resolucion_manual'
+          AND column_name LIKE 'fecha%'
+        LOOP
+            -- Construir la lógica para cada columna
+            query := query || col_name || ' = CASE ' ||
+                         -- Manejo de formato YYYY-MM-DD (intercambiar día y mes)
+                     'WHEN ' || col_name || ' ~ ''^\d{4}-\d{2}-\d{2}$'' THEN ' ||
+                     'SPLIT_PART(' || col_name || ', ''-'', 1) || ''-'' || ' ||  -- Año (YYYY)
+                     'SPLIT_PART(' || col_name || ', ''-'', 2) || ''-'' || ' ||  -- Mes (MM) (intercambiado con el día)
+                     'SPLIT_PART(' || col_name || ', ''-'', 3) ' ||  -- Día (DD) (intercambiado con el mes)
+
+            -- Manejo de formato DD/MM/YYYY (convertir a YYYY-MM-DD)
+                     'WHEN ' || col_name || ' ~ ''^\d{1,2}/\d{1,2}/\d{4}$'' THEN ' ||
+                     'SPLIT_PART(' || col_name || ', ''/'', 3) || ''-'' || ' ||  -- Año (YYYY)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 1), 2, ''0'') || ''-'' || ' ||  -- Mes (MM) (intercambiado con el día)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 2), 2, ''0'') ' ||  -- Día (DD) (intercambiado con el mes)
+
+            -- Manejo de formato MM/DD/YYYY (convertir a YYYY-MM-DD)
+                     'WHEN ' || col_name || ' ~ ''^\d{1,2}/\d{1,2}/\d{4}$'' THEN ' ||
+                     'SPLIT_PART(' || col_name || ', ''/'', 3) || ''-'' || ' ||  -- Año (YYYY)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 2), 2, ''0'') || ''-'' || ' ||  -- Mes (MM) (intercambiado con el día)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 1), 2, ''0'') ' ||  -- Día (DD) (intercambiado con el mes)
+                     'ELSE ' || col_name || ' END, ';
+        END LOOP;
+
+    -- Si no hay columnas, no ejecutar nada
+    IF query = '' THEN
+        RAISE NOTICE 'No se encontraron columnas que comiencen con "fecha" en la tabla resolucion_manual.';
+        RETURN;
+    END IF;
+
+    -- Remover la última coma y espacio
+    query := LEFT(query, -2);
+
+    -- Construir y ejecutar el comando UPDATE
+    query := 'UPDATE resolucion_manual SET ' || query || ';';
+    EXECUTE query;
+
+    RAISE NOTICE 'Las columnas de fecha han sido actualizadas en la tabla resolucion_manual.';
+END $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION actualizar_fechas_resolucion_automatica()
+    RETURNS VOID AS $$
+DECLARE
+    col_name TEXT;
+    query TEXT := '';
+BEGIN
+    -- Iterar sobre las columnas que comienzan con 'fecha' en la tabla resolucion_manual
+    FOR col_name IN
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'resolucion_manual'
+          AND column_name LIKE 'fecha%'
+        LOOP
+            -- Construir la lógica para cada columna
+            query := query || col_name || ' = CASE ' ||
+                         -- Manejo de formato YYYY-MM-DD (intercambiar día y mes)
+                     'WHEN ' || col_name || ' ~ ''^\d{4}-\d{2}-\d{2}$'' THEN ' ||
+                     'SPLIT_PART(' || col_name || ', ''-'', 1) || ''-'' || ' ||  -- Año (YYYY)
+                     'SPLIT_PART(' || col_name || ', ''-'', 2) || ''-'' || ' ||  -- Mes (MM) (intercambiado con el día)
+                     'SPLIT_PART(' || col_name || ', ''-'', 3) ' ||  -- Día (DD) (intercambiado con el mes)
+
+            -- Manejo de formato DD/MM/YYYY (convertir a YYYY-MM-DD)
+                     'WHEN ' || col_name || ' ~ ''^\d{1,2}/\d{1,2}/\d{4}$'' THEN ' ||
+                     'SPLIT_PART(' || col_name || ', ''/'', 3) || ''-'' || ' ||  -- Año (YYYY)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 1), 2, ''0'') || ''-'' || ' ||  -- Mes (MM) (intercambiado con el día)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 2), 2, ''0'') ' ||  -- Día (DD) (intercambiado con el mes)
+
+            -- Manejo de formato MM/DD/YYYY (convertir a YYYY-MM-DD)
+                     'WHEN ' || col_name || ' ~ ''^\d{1,2}/\d{1,2}/\d{4}$'' THEN ' ||
+                     'SPLIT_PART(' || col_name || ', ''/'', 3) || ''-'' || ' ||  -- Año (YYYY)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 2), 2, ''0'') || ''-'' || ' ||  -- Mes (MM) (intercambiado con el día)
+                     'LPAD(SPLIT_PART(' || col_name || ', ''/'', 1), 2, ''0'') ' ||  -- Día (DD) (intercambiado con el mes)
+                     'ELSE ' || col_name || ' END, ';
+        END LOOP;
+
+    -- Si no hay columnas, no ejecutar nada
+    IF query = '' THEN
+        RAISE NOTICE 'No se encontraron columnas que comiencen con "fecha" en la tabla resolucion_manual.';
+        RETURN;
+    END IF;
+
+    -- Remover la última coma y espacio
+    query := LEFT(query, -2);
+
+    -- Construir y ejecutar el comando UPDATE
+    query := 'UPDATE resolucion_manual SET ' || query || ';';
+    EXECUTE query;
+
+    RAISE NOTICE 'Las columnas de fecha han sido actualizadas en la tabla resolucion_manual.';
+END $$ LANGUAGE plpgsql;
+
+

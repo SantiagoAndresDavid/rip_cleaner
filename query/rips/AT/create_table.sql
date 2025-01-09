@@ -1,0 +1,14 @@
+DROP TABLE AT;
+CREATE TABLE AT (
+                    NUMERO_DE_LA_FACTURA TEXT,
+                    CODIGO_DEL_PRESTADOR_DE_SERVICIOS_DE_SALUD TEXT,
+                    TIPO_DE_IDENTIFICACION_DEL_USUARIO TEXT,
+                    NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA TEXT,
+                    NUMERO_DE_AUTORIZACION TEXT,
+                    TIPO_SERVICIO TEXT,
+                    CODGIO_SERVICIO TEXT,
+                    NOMBRE_SERVICIO TEXT,
+                    CANTIDAD TEXT,
+                    VALOR_UNITARIO_MATERIAL TEXT,
+                    VALOR_TOTAL_MATERIAL TEXT
+);

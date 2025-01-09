@@ -1,3 +1,4 @@
+DROP TABLE AM;
 CREATE TABLE AM (
                               NUMERO_DE_LA_FACTURA TEXT,
                               CODIGO_DEL_PRESTADOR_DE_SERVICIOS_DE_SALUD TEXT,

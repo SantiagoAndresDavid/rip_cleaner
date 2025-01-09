@@ -1,3 +1,5 @@
+DELETE FROM medicamentos;
+
 create table medicamentos
 (
     codigo_del_medicamento           text,
@@ -8,4 +10,3 @@ create table medicamentos
     unidad_de_medida_del_medicamento text
 );
 
-DELETE FROM medicamentos;
