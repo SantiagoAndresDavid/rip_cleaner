@@ -8,7 +8,7 @@ BEGIN
     RETURN QUERY
         UPDATE us
             SET tipo_de_identificacion_del_usuario = 'PT'
-            WHERE tipo_de_identificacion_del_usuario IN ('CE', 'NU')
+            WHERE tipo_de_identificacion_del_usuario IN ('CE', 'NU','PA')
                 AND tipo_de_identificacion_del_usuario != 'PT'
             RETURNING 'us' AS tabla_origen, numero_de_identificacion_del_usuario_del_sistema;
 

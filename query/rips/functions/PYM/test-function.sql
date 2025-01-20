@@ -3,14 +3,26 @@ SELECT * FROM actualizar_tipo_identificacion();
 SELECT * FROM actualizar_codigo_municipio();
 SELECT * FROM actualizar_codigo_departamento();
 SELECT * FROM actualizar_causa_externa();
+SELECT * FROM actualizar_tipo_identificacion();
 SELECT * FROM actualizar_finalidad_diagnostico_niños();
-SELECT * FROM actualizar_codigo_factura('240390');
+SELECT * FROM actualizar_finalidad_diagnostico_niños_ap();
+SELECT * FROM actualizar_codigo_factura('240717');
 SELECT * FROM actualizar_diagnostico_vacio();
+SELECT * FROM actualizar_diagnostico_vacio_ap();    
 SELECT * FROM actualizar_codigos_procedimientos_erroneos();
+SELECT * FROM actualizar_tipo_diagnostico_principal();
 SELECT * FROM actualizar_forma_realizacion_acto_quirurgico();
 SELECT * FROM actualizar_finalidad_erronea('1','3');
-SELECT * FROM actualizar_tipo_documento_all('1759390','PT');
+SELECT * FROM actualizar_tipo_documento_all('6216526','PT');
+SELECT * FROM actualizar_tipo_documento_all('1064112017','TI');
+SELECT * FROM find_non_890_procedures_with_ap();
+SELECT move_non_890_procedures_to_ap();
 
+
+SELECT *
+FROM AC
+WHERE CODIGO_DE_LA_CONSULTA NOT LIKE '890%'
+LIMIT 10;
 
 
 SELECT * FROM buscar_usuarios_por_codigo_consulta('890703');

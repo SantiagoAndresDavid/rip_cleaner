@@ -1,0 +1,8 @@
+CREATE OR REPLACE FUNCTION actualizar_finalidad_procedimiento()
+RETURNS void AS $$
+BEGIN
+    UPDATE AP
+    SET FINALIDAD_DEL_PROCEDIMIENTO = '3'
+    WHERE FINALIDAD_DEL_PROCEDIMIENTO = '1';
+END;
+$$ LANGUAGE plpgsql;

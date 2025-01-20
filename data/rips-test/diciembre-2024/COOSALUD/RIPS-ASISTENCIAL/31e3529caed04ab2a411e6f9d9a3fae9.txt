@@ -1,0 +1,6 @@
+Detalle de inconsistencias: 
+
+En el archivo "AC", el campo "Tipo de diagnóstico principal" de la línea 264 presenta la siguiente inconsistencia: El valor del campo no puede ser cero o vacío.
+
+
+----- Por favor revise y corrija las inconsistencias relacionadas anteriormente -----
