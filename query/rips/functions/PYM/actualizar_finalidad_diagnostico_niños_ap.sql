@@ -8,7 +8,7 @@ BEGIN
     RETURN QUERY
 UPDATE AP
 SET finalidad_del_procedimiento = '04',
-    codigo_del_procedimiento = 'Z762'
+    diagnostico_principal = 'Z762'
     FROM US
 WHERE AP.NUMERO_DE_IDENTIFICACION_DEL_USUARIO_EN_EL_SISTEMA = US.NUMERO_DE_IDENTIFICACION_DEL_USUARIO_DEL_SISTEMA
   AND (

@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION actualizar_diagnostico_vacio()
 BEGIN
     RETURN QUERY
         UPDATE ac
-         SET CODIGO_DEL_DIAGNOSTICO_PRINCIPAL = 'R104'
+         SET CODIGO_DEL_DIAGNOSTICO_PRINCIPAL = 'Z719'
         WHERE CODIGO_DEL_DIAGNOSTICO_PRINCIPAL IS NULL
         RETURNING ac.numero_de_identificacion_del_usuario_en_el_sistema,ac.codigo_de_la_consulta;
 END;
