@@ -1,5 +1,29 @@
 #!/bin/bash
 
+#
+execute_create(){
+    local nombre_proc="$1"
+    local db="$2"
+    local user="$3"
+    local host="$4"
+    local port="$5"
+    local password="$6"
+
+    echo "🚀 Ejecutando procedimiento: $nombre_proc..."
+    RESULT=$(PGPASSWORD="$password" psql -U "$user" -h "$host" -p "$port" -d "$db" \
+        --set=client_encoding=UTF8 \
+        -P expanded=off \
+        -P pager=off \
+        -c "SELECT * FROM $nombre_proc();")
+
+    if [[ -z "$RESULT" ]]; then
+        echo "⚠️ No se obtuvo ningún resultado de $nombre_proc."
+    else
+        echo "✅ Resultados de $nombre_proc:"
+        echo "$RESULT"
+    fi
+}
+
 # Función para ejecutar procedimientos almacenados
 execute_procedure() {
     local nombre_proc="$1"
@@ -46,3 +70,4 @@ execute_procedures() {
         fi
     done
 }
+
