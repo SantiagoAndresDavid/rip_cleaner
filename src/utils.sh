@@ -15,7 +15,7 @@ show_usage() {
   $0 --DB_NAME=<nombre_bd> --USER=<usuario> --PORT=<puerto> --HOST=<host> --PASSWORD=<contraseña> 
   
   create-structure-and-scripts:[--create-and-import] 
-  clear-rips: 
+  clear-rips:[--CLEAR_DATA_PYM] OR [--CLEAR_DATA_ASSITANCE]
   import-data:--import_data optional:[--ARCHIVO_CSV=<ruta>]
 
 \e[0m"

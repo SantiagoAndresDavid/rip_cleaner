@@ -31,7 +31,25 @@ ASSISTANCE_PROCEDURES=(
     "actualizar_tipo_diagnostico_principal"
     "actualizar_finalidad_procedimiento"
 )
-
+PYM_PROCEDURES=(
+    "eliminar_decimales"
+    "actualizar_medicamentos"
+    "eliminar_duplicados_ac"
+    "actualizar_tipo_identificacion"
+    "validar_documentos_por_edad"
+    "actualizar_codigo_municipio"
+    "actualizar_codigo_departamento"
+    "actualizar_finalidad_diagnostico_niños"
+    "actualizar_finalidad_diagnostico_niños_ap"
+    "actualizar_causa_externa"
+    "actualizar_finalidad_de_la_causa_externa_consulta"
+    "actualizar_diagnostico_vacio"
+    "actualizar_diagnostico_vacio_ap"
+    "actualizar_tipo_diagnostico_principal"
+    "actualizar_finalidad_procedimiento"
+    "actualizar_codigos_procedimientos_erroneos"
+    "actualizar_forma_realizacion_acto_quirurgico"
+)
 # Leer argumentos
 for arg in "$@"; do
     case $arg in
@@ -43,7 +61,10 @@ for arg in "$@"; do
         --IMPORT_DATA) IMPORT_DATA=true ;;
         --ARCHIVO_CSV=*) ARCHIVO_CSV="${arg#*=}" ;;
         --CREATE_AND_IMPORT_ASSISTANCE) CREATE_AND_IMPORT_ASSISTANCE=true ;;
-        --CLEAR_DATA_ASSITANCE) CLEAR_DATA_ASSITANCE=true ;;  # Ahora sí inicializa correctamente
+        --CREATE_AND_IMPORT_PYM) CREATE_AND_IMPORT_PYM=true ;;
+        --CLEAR_DATA_ASSITANCE) CLEAR_DATA_ASSITANCE=true ;; 
+        --CLEAR_DATA_PYM) CLEAR_DATA_PYM=true ;;
+        --UPDATE_DOCUMENTS) UPDATE_DOCUMENTS=true ;;
         *) 
             echo "❌ Opción desconocida: $arg"
             usage
@@ -72,6 +93,20 @@ elif [[ "$CREATE_AND_IMPORT_ASSISTANCE" == true ]]; then
     print_spaces_or_lines 2 "lines"
     echo "⚙️ Creando SCRIPTS"
     create_structure_and_import "$SQL_ASSISTANCE" "$DB_NAME" "$USER" "$HOST" "$PORT" "$PASSWORD"
+
+elif [[ "$CREATE_AND_IMPORT_PYM" == true ]]; then
+    print_spaces_or_lines 2 "lines"  
+    echo "⚙️ Creando TABLAS"
+    # Imprime 3 saltos de línea
+    create_structure_and_import "$SQL_TABLES" "$DB_NAME" "$USER" "$HOST" "$PORT" "$PASSWORD"
+    print_spaces_or_lines 2 "lines"
+    echo "⚙️ Creando SCRIPTS"
+    create_structure_and_import "$SQL_PYM" "$DB_NAME" "$USER" "$HOST" "$PORT" "$PASSWORD"
+elif [[ "$CLEAR_DATA_PYM" == true ]]; then
+    print_spaces_or_lines 2 "lines"
+    echo "⚙️ Limpiando datos PYM"
+    print_spaces_or_lines 2 "lines"
+    execute_procedures "${PYM_PROCEDURES[@]}" "$DB_NAME" "$USER" "$HOST" "$PORT" "$PASSWORD"
 elif [[ "$CLEAR_DATA_ASSITANCE" == true ]]; then
     print_spaces_or_lines 2 "lines"
     echo "⚙️ Limpiando datos asistenciales"
