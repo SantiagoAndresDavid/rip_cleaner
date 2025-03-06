@@ -7,13 +7,11 @@ SELECT * FROM actualizar_tipo_identificacion();
 -- paso 3 verificar los documentos por edad
 SELECT * FROM validar_documentos_por_edad();
 SELECT * FROM validar_documentos_por_edad(ARRAY['1067822452', '1137734773','1067819256']);
-SELECT * FROM actualizar_tipo_documento_all('1067819206','TI');
-SELECT * FROM actualizar_tipo_documento_all('1137734435','RC');
 -- paso 4 cambiar el departamento y el municipio
 SELECT * FROM actualizar_codigo_municipio();
 SELECT * FROM actualizar_codigo_departamento();
 -- paso 5 actualizar el código de la factura
-SELECT * FROM actualizar_codigo_factura('246673');
+SELECT * FROM actualizar_codigo_factura('253970');
 -- paso 6 actualizar la finalidad de la causa externa
 SELECT * FROM actualizar_finalidad_diagnostico_niños();
 SELECT * FROM actualizar_finalidad_diagnostico_niños_ap();
@@ -39,9 +37,12 @@ SET ambito_de_realizacion_del_procedimiento = '1'
 WHERE ambito_de_realizacion_del_procedimiento ='7' or  ambito_de_realizacion_del_procedimiento ='5' or  ambito_de_realizacion_del_procedimiento ='6' or  ambito_de_realizacion_del_procedimiento ='4'
 RETURNING ap.ambito_de_realizacion_del_procedimiento,ap.ambito_de_realizacion_del_procedimiento;
 
-UPDATE ap
-SET finalidad_del_procedimiento = LTRIM(finalidad_del_procedimiento, '0')
-WHERE finalidad_del_procedimiento LIKE '0%';
+UPDATE ac
+SET finalidad_de_la_causa_externa_consulta = LTRIM(finalidad_de_la_causa_externa_consulta, '0')
+WHERE finalidad_de_la_causa_externa_consulta LIKE '0%';
+UPDATE AC
+SET FINALIDAD_DE_LA_CAUSA_EXTERNA_CONSULTA = '0' || FINALIDAD_DE_LA_CAUSA_EXTERNA_CONSULTA
+WHERE FINALIDAD_DE_LA_CAUSA_EXTERNA_CONSULTA NOT LIKE '0%';
 
 
 

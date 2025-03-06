@@ -2,6 +2,7 @@
 SELECT eliminar_decimales();
 -- paso 2 cambiar de CE Y NU POR PT
 SELECT * FROM actualizar_tipo_identificacion();
+SELECT * FROM actualizar_medicamentos();
 -- paso 3 verificar los documentos por edad
 SELECT * FROM validar_documentos_por_edad();
 SELECT * FROM validar_documentos_por_edad(ARRAY['1067822461','1067822467','1067822479','1067822480']);
@@ -27,7 +28,7 @@ SELECT * FROM actualizar_tipo_diagnostico_principal();
 SELECT * FROM actualizar_finalidad_procedimiento();
 
 -- SOLUCIONES
-        SELECT * FROM eliminar_usuario_y_registros_relacionados('6402357');
+SELECT * FROM eliminar_usuario_y_registros_relacionados('6402357');
 SELECT * FROM actualizar_finalidad_ap();
 
 
