@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/query/rips/AC/create_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/AM/create_table .sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/AM/query/validacion_medicamentos.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/AP/create_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/AT/create_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/US/create_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/functions/PYM/actualizar_medicamentos.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/functions/PYM/test-function.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/functions/actualizar_medicamentos.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/functions/tables/create_table_am.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/query/rips/functions/test_functions.sql" dialect="PostgreSQL" />
+  </component>
+</project>
