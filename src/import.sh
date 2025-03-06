@@ -3,42 +3,47 @@ source "$(dirname "$0")/utils.sh"
 
 # Función para limpiar espacios en el CSV
 clean_csv() {
-    local file="$1"
-    echo "🛠️ Limpiando espacios en: $file"
-    sed -i 's/ *, */,/g' "$file"
-    sed -i 's/^ *//;s/ *$//' "$file"
-    echo "✅ file limpio: $file"
+    local archivo="$1"
+    echo "🛠️ Limpiando espacios en: $archivo"
+    sed -i 's/ *, */,/g' "$archivo"
+    sed -i 's/^ *//;s/ *$//' "$archivo"
+    echo "✅ Archivo limpio: $archivo"
 }
 
 # Función para importar CSV a PostgreSQL
 import_csv() {
-    local directory_csv="$1"
+    local directorio_csv="$1"
     local db="$2"
     local user="$3"
     local host="$4"
     local port="$5"
     local password="$6"
-    
-    local file_type=("US*.csv" "AT*.csv" "AM*.csv" "AP*.csv" "AC*.csv")
+    local patrones=("US*.csv" "AT*.csv" "AM*.csv" "AP*.csv" "AC*.csv" "medicamentos.csv")
 
-    echo "📂 Buscando archivos en: $directory_csv"
-    
-    for pattern in "${file_type[@]}"; do
-        echo "🔍 Buscando archivos con patrón: $pattern"
-        for file in "$directory_csv"/$pattern; do
-            if [ -f "$file" ]; then
-                local table_name=$(basename "$file" | cut -c 1-2)
-                clean_csv "$file"
-                echo "📤 Importando $file a tabla $table_name..."
-                
+    echo "📂 Buscando archivos en: $directorio_csv"
+    for patron in "${patrones[@]}"; do
+        echo "🔍 Buscando archivos con patrón: $patron"
+        for archivo in "$directorio_csv"/$patron; do
+            if [ -f "$archivo" ]; then
+                case "$(basename "$archivo")" in
+                    US*) nombre_tabla="us" ;;
+                    AT*) nombre_tabla="at" ;;
+                    AM*) nombre_tabla="am" ;;
+                    AP*) nombre_tabla="ap" ;;
+                    AC*) nombre_tabla="ac" ;;
+                    medicamentos.csv) nombre_tabla="medicamentos" ;;  # ¡Aquí está la corrección!
+                    *) echo "⚠️ No se reconoce la tabla para $archivo"; continue ;;
+                esac
+
+                clean_csv "$archivo"
+                echo "📤 Importando $archivo a tabla $nombre_tabla..."
                 PGPASSWORD="$password" psql -U "$user" -h "$host" -p "$port" -d "$db" -c \
-                    "\copy $table_name FROM '$file' DELIMITER ',' CSV ENCODING 'LATIN1';"
-
+                    "\copy $nombre_tabla FROM '$archivo' DELIMITER ',' CSV ENCODING 'LATIN1';"
                 if [[ $? -ne 0 ]]; then
-                    echo "❌ Error al importar $file"
+                    echo "❌ Error al importar $archivo"
                     exit 1
                 else
-                    echo "✅ $file importado correctamente."
+                    echo "✅ $archivo importado correctamente."
                     sleep 1
                 fi
             fi
@@ -46,6 +51,7 @@ import_csv() {
     done
     echo "✅ ¡Importación completada!"
 }
+
 
 create_structure_and_import(){
     local folder="$1"
@@ -55,14 +61,16 @@ create_structure_and_import(){
     local port="$5"
     local password="$6"
 
+    # Obtener la lista de archivos .sql en orden inverso
+    local sql_files=($(ls -1 "$folder"/*.sql 2>/dev/null | sort -r))
 
-    for sql_file in "$folder"/*.sql; do
-        # Verificar si hay archivos SQL en la carpeta
-        if [[ ! -f "$sql_file" ]]; then
-            echo "⚠️ No se encontraron archivos .sql en $folder."
-            return 1
-        fi
+    # Verificar si hay archivos SQL en la carpeta
+    if [[ ${#sql_files[@]} -eq 0 ]]; then
+        echo "⚠️ No se encontraron archivos .sql en $folder."
+        return 1
+    fi
 
+    for sql_file in "${sql_files[@]}"; do
         echo "🚀 Ejecutando archivo SQL: $sql_file..."
         RESULT=$(PGPASSWORD="$password" psql -U "$user" -h "$host" -p "$port" -d "$db" \
             --set=client_encoding=UTF8 \
@@ -78,6 +86,9 @@ create_structure_and_import(){
             echo "✅ Archivo $sql_file ejecutado correctamente."
         fi
     done
+
     print_line 200
-    echo "✅ ¡Se creo la estructura y los scripts!"
+    echo "✅ ¡Se creó la estructura y los scripts!"
 }
+
+
